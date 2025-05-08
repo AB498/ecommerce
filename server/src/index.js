@@ -47,12 +47,12 @@ app.use('/api', routes);
 
 // Serve the React build in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../client/dist')));
-  
+  app.use(express.static(path.join(__dirname, '../../client/build')));
+
   app.get('*', (req, res) => {
     // Don't serve React app for API routes
     if (req.path.startsWith('/api')) return;
-    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+    res.sendFile(path.join(__dirname, '../../client/build/index.html'));
   });
 }
 
