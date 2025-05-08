@@ -1,7 +1,11 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+// In production, use a relative URL to make requests to the same domain
+// In development, use the localhost URL
+const API_URL = process.env.NODE_ENV === 'production'
+  ? '/api'
+  : (process.env.REACT_APP_API_URL || 'http://localhost:8000/api');
 
 // Create axios instance
 const api = axios.create({

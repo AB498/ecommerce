@@ -2,7 +2,9 @@ import axios from 'axios';
 
 // Create an axios instance with default config
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+  baseURL: process.env.NODE_ENV === 'production'
+    ? '/api'
+    : (process.env.REACT_APP_API_URL || 'http://localhost:5000/api'),
   headers: {
     'Content-Type': 'application/json',
   },
@@ -33,13 +35,13 @@ api.interceptors.response.use(
       // Clear local storage
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      
+
       // Redirect to login page if not already there
       if (window.location.pathname !== '/login') {
         window.location.href = '/login';
       }
     }
-    
+
     return Promise.reject(error);
   }
 );
